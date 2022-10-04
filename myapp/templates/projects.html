@@ -1,2 +1,15 @@
+{% extends "layoust/base.html" %}
+
+{% block content %}
+
 <h1>Projects</h1>
-<p>{{ projects }}</p>
+
+{% for project in projects %}
+
+<article>
+  <h1>{{ project.name }}</h1>
+</article>
+
+{% endfor %}
+
+{% endblock %}
