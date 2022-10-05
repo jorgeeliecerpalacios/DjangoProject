@@ -1,17 +1,19 @@
 from django.http import HttpResponse
 from .models import Project, Task
 from django.shortcuts import render, redirect
-from .forms import CreateNewTask
+from .forms import CreateNewTask, CreateNewProject
 # Create your views here.
 
 
 def index(request):
     title = 'Django course!!!'
-    return render(request,'index.html', {'title': title})
+    return render(request, 'index.html', {'title': title})
+
 
 def about(request):
     username = 'Jorge'
-    return render(request,'about.html', {'username': username})
+    return render(request, 'about.html', {'username': username})
+
 
 def hello(request, username):
     # print(username)
@@ -23,11 +25,13 @@ def projects(request):
     projects = Project.objects.all()
     return render(request, 'project/projects.html', {'projects': projects})
 
+
 def tasks(request):
     # tasks = Task.objects.get(title=title)
     # tasks = get_object_or_404(Task, id=id)
     tasks = Task.objects.all()
-    return render(request,'tasks/task.html', {'tasks': tasks})
+    return render(request, 'tasks/task.html', {'tasks': tasks})
+
 
 def create_tasks(request):
     print('llego')
@@ -35,13 +39,18 @@ def create_tasks(request):
         # print('es get')
         return render(request, 'tasks/create_task.html', {'form': CreateNewTask})
         # show interface
-    else: 
+    else:
         # print('es post')
         # print(request.GET['description'])
-        print(request.POST['title'])
-        Task.objects.create(title=request.POST['title'], description=request.POST['description'],  project_id=2)
-        return redirect('/tasks/')
+        # print(request.POST['title'])
+        Task.objects.create(
+            title=request.POST['title'], description=request.POST['description'],  project_id=2)
+        return redirect('tasks')
+
 
 def create_project(request):
-    return render(request, 'project/create_project.html')
-
+    if request.method == 'GET':
+        return render(request, 'project/create_project.html', {'form': CreateNewProject})
+    else:
+        project = Project.objects.create(name=request.POST['name'])
+        return redirect('projects')

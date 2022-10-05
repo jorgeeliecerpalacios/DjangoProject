@@ -1,9 +1,14 @@
 {% extends 'layoust/base.html' %}
 
+{% load static %}
+
 
 {% block content %}
 
 <h1>{{ title }}</h1>
+
+<img src="{% static 'amortiguador.jpg' %}" alt="" width="200">
+
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem qui harum ducimus aperiam at velit consequatur facere commodi quidem dolorum quas vel, sed eum iusto ad odio facilis, nobis atque!</p>
 
 {% endblock %}
